@@ -1,70 +1,153 @@
-# Getting Started with Create React App
+# Far Away Packing List App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
 
-## Available Scripts
+1. [Project Overview](#project-overview)
+2. [Features](#features)
+3. [Components](#components)
+   - [App Component](#1-app-component)
+   - [Form Component](#2-form-component)
+   - [PackingList Component](#3-packinglist-component)
+   - [Item Component](#4-item-component)
+   - [Stats Component](#5-stats-component)
+   - [Logo Component](#6-logo-component)
+4. [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Installation](#installation)
+5. [Usage](#usage)
+6. [File Structure](#file-structure)
 
-In the project directory, you can run:
 
-### `npm start`
+## Project Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The **Far Away Packing List** is a simple yet efficient React-based web application that helps users manage a list of items they need to pack for trips. It allows users to add, sort, toggle, and delete items from their packing list, offering an organized and user-friendly interface to ensure nothing is left behind.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- **Add New Items:** Users can add new items to their packing list by specifying the item description and quantity.
+- **Delete Items:** Users can remove any item from their list with a single click.
+- **Toggle Packed Status:** Users can mark items as packed or unpacked by clicking a checkbox.
+- **Sort Items:** Users can sort the packing list by input order, description, or packing status.
+- **Clear List:** With the click of a button, users can clear the entire packing list.
+- **Real-time Statistics:** Displays the total number of items and the percentage of items packed.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Components
 
-### `npm run build`
+### 1. `App` Component
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This is the main component that manages the state and renders the UI by combining other components. It holds the list of items and handles the logic for adding, deleting, and updating item statuses.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### State:
+- `items`: An array of objects, where each object represents an item with properties such as `id`, `description`, `quantity`, and `packed`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Functions:
+- `handleAddItems(item)`: Adds a new item to the packing list.
+- `handleDeleteItems(id)`: Removes an item from the packing list by `id`.
+- `updateToggleItems(id)`: Toggles the `packed` status of an item by `id`.
+- `handleClearList()`: Clears all items from the list.
 
-### `npm run eject`
+#### Rendered Components:
+- `Logo`
+- `Form`
+- `PackingList`
+- `Stats`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 2. `Form` Component
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This component is responsible for capturing user input to add new items to the packing list. The user can select the quantity and type the item description.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### State:
+- `description`: Tracks the description of the item being added.
+- `quantity`: Tracks the quantity of the item.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### Props:
+- `onAddItems`: A function passed down from the `App` component to handle the addition of new items.
 
-## Learn More
+#### Functions:
+- `handleSubmit(event)`: Handles the form submission, preventing the default behavior and creating a new item to add to the list.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 3. `PackingList` Component
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This component renders the list of items and offers sorting options. It also contains logic to delete items, toggle their packed status, and clear the list.
 
-### Code Splitting
+#### State:
+- `sortBy`: Tracks the current sorting method, which can be "input", "description", or "packed".
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+#### Props:
+- `items`: The array of items passed down from `App`.
+- `onDeleteItems`: A function to delete items from the list.
+- `onToggleItems`: A function to toggle the packed status of items.
+- `onClearList`: A function to clear all items from the list.
 
-### Analyzing the Bundle Size
+### 4. `Item` Component
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+This is a small component that represents each individual item in the packing list. It provides a checkbox to mark items as packed or unpacked and a delete button.
 
-### Making a Progressive Web App
+#### Props:
+- `item`: The item object.
+- `onDeleteItems`: A function to delete the item.
+- `onToggleItems`: A function to toggle the packed status of the item.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 5. `Stats` Component
 
-### Advanced Configuration
+This component displays the statistics for the packing list, such as the total number of items and the percentage of packed items.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+#### Props:
+- `items`: The array of items passed down from `App`.
 
-### Deployment
+#### Computed Values:
+- `numItems`: Total number of items.
+- `numItemsPacked`: Number of items marked as packed.
+- `percentage`: Percentage of items packed (rounded to the nearest whole number).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 6. `Logo` Component
 
-### `npm run build` fails to minify
+This is a simple component that displays the logo and title of the application: "🌴 Far Away 👜".
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Getting Started
+
+### Prerequisites
+
+- Node.js and npm should be installed on your machine.
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/far-away-packing-list.git
+   cd far-away-packing-list
+
+2. Install the dependencies:
+   ```bash
+   npm install
+
+3. Start the development server:
+   ```bash
+   npm start
+The application should now be running on `http://localhost:3000/`.
+
+## Usage
+
+1. Enter the name of the item you wish to add in the input field at the top of the page.
+2. Select the quantity of the item using the dropdown menu and click the "Add" button to include it in your packing list.
+3. To mark an item as packed or unpacked, simply check or uncheck the box next to the item.
+4. To remove an item from the list, click the ❌ button beside the corresponding item.
+5. You can sort your items using the dropdown menu with the following options:
+   - **Sort by Input Order**: Displays items in the order they were added.
+   - **Sort by Description**: Arranges items alphabetically based on their description.
+   - **Sort by Packed Status**: Organizes items by their packing status (packed vs. unpacked).
+6. To clear all items from the list, click the "Clear List" button.
+
+## File Structure
+  ```bash
+  src/
+│
+├── components/
+│   ├── Form.js            // Form for adding new items
+│   ├── Logo.js            // Logo of the application
+│   ├── PackingList.js     // Displays and manages the list of items
+│   └── Stats.js           // Displays packing statistics
+│
+├── App.js                 // Main application file
+└── index.js               // Entry point for the React app
+
